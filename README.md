@@ -1,7 +1,3 @@
-**Note: I am no longer maintaining the code within this repository. It will likely not work on newer versions of Blender, and the instructions below may no longer function correctly.**
-
-**If you are a developer that wants to maintain this plugin, notify me and I will update this note, redirecting users to your repo.**
-
 # lolblender
 
 Python addon to use League of Legends files into blender, a 3d-modeling software.
