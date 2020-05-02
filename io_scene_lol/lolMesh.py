@@ -291,15 +291,18 @@ def buildMesh(filepath):
     #Create object from mesh
     obj = bpy.data.objects.new('lolMesh', mesh)
 
-    #Link object to the current scene
-    scene.objects.link(obj)
+    #Create collection for the object
+    coll = bpy.data.collections.new('lolChar')
+    scene.collection.children.link(coll)
 
+    #Link object to the collection
+    coll.objects.link(obj)
 
     #Create UV texture coords
     texList = []
     uvtexName = 'lolUVtex'
-    obj.data.uv_textures.new(uvtexName)
-    uv_layer = obj.data.uv_layers[-1].data  # sets layer to the above texture
+    obj.data.uv_layers.new(name=uvtexName)
+    uv_layer = obj.data.uv_layers[uvtexName].data
     set = []
     for k, loop in enumerate(obj.data.loops):
         # data.loops contains the vertex of tris
@@ -319,7 +322,7 @@ def buildMesh(filepath):
     #material = bpy.data.materials.ne(materialName)
     mesh.update() 
     #set active
-    obj.select = True
+    obj.select_set(True)
 
     return {'FINISHED'}
     

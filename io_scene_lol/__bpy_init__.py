@@ -43,8 +43,11 @@ class IMPORT_OT_lol(bpy.types.Operator, ImportHelper):
     def draw(self, context):
         layout = self.layout
         fileProps = context.space_data.params
-        self.MODEL_DIR = fileProps.directory
+        self.MODEL_DIR = fileProps.directory.decode()
         
+        print(fileProps.filename)
+        print(type(fileProps.filename))
+
         selectedFileExt = path.splitext(fileProps.filename)[-1].lower()
         if selectedFileExt == '.skn':
             self.SKN_FILE = fileProps.filename
@@ -174,9 +177,9 @@ def import_char(MODEL_DIR="", SKN_FILE="", SKL_FILE="", DDS_FILE="",
         lolSkeleton.buildSKL(boneList, sklHeader.version)
         armObj = bpy.data.objects['Armature']
         armObj.name ='lolArmature'
-        armObj.data.draw_type = 'STICK'
+        armObj.data.display_type = 'STICK'
         armObj.data.show_axes = True
-        armObj.show_x_ray = True
+        armObj.show_in_front = True
 
     if SKN_FILE:
         SKN_FILEPATH=path.join(MODEL_DIR, SKN_FILE)
@@ -184,9 +187,9 @@ def import_char(MODEL_DIR="", SKN_FILE="", SKL_FILE="", DDS_FILE="",
         lolMesh.buildMesh(SKN_FILEPATH)
         meshObj = bpy.data.objects['lolMesh']
         bpy.ops.object.select_all(action='DESELECT')
-        meshObj.select = True
+        meshObj.select_set(True)
         bpy.ops.transform.resize(value=(1,1,-1), constraint_axis=(False, False,
-            True), constraint_orientation='GLOBAL')
+            True), orient_matrix_type='GLOBAL')
         #meshObj.name = 'lolMesh'
         #Presently io_scene_obj.load() does not import vertex normals, 
         #so do it ourselves
@@ -215,14 +218,14 @@ def import_char(MODEL_DIR="", SKN_FILE="", SKL_FILE="", DDS_FILE="",
         tex = bpy.data.textures.new(img_name + '_texImage', type='IMAGE')
         tex.image = img
         mat = bpy.data.materials.new(name=(img_name + '_mat'))
-        mat.use_shadeless = True
+        # mat.use_shadeless = True
 
-        mtex = mat.texture_slots.add()
-        mtex.texture = tex
-        mtex.texture_coords = 'UV'
-        mtex.use_map_color_diffuse = True
-
-        meshObj.data.materials.append(mat)
+        # Assign it to object
+        if meshObj.data.materials:
+            meshObj.data.materials[0] = mat
+        else:
+            meshObj.data.materials.append(mat)
+        
 
 def import_animation(MODEL_DIR="", ANM_FILE=""):
     '''Import an Animation for a LoL character
@@ -297,14 +300,19 @@ def register():
     bpy.utils.register_class(IMPORT_OT_lol)
     bpy.utils.register_class(IMPORT_OT_lolanm)
     bpy.utils.register_class(IMPORT_OT_sco)
-    bpy.types.INFO_MT_file_import.append(menu_func_import)
+    bpy.types.TOPBAR_MT_file_import.append(menu_func_import)
 
     bpy.utils.register_class(EXPORT_OT_lol)
-    bpy.types.INFO_MT_file_export.append(menu_func_export)
+    bpy.types.TOPBAR_MT_file_export.append(menu_func_export)
 
 def unregister():
-    bpy.types.INFO_MT_file_import.remove(menu_func_import)
-    bpy.types.INFO_MT_file_export.remove(menu_func_export)
+    bpy.utils.unregister_class(IMPORT_OT_lol)
+    bpy.utils.unregister_class(IMPORT_OT_lolanm)
+    bpy.utils.unregister_class(IMPORT_OT_sco)
+    bpy.types.TOPBAR_MT_file_import.remove(menu_func_import)
+
+    bpy.utils.unregister_class(EXPORT_OT_lol)
+    bpy.types.TOPBAR_MT_file_export.remove(menu_func_export)
 
 
 
