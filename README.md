@@ -15,7 +15,7 @@ After those commits, the directories were restructured. Releases will be put up 
 This project is licensed under GPLv3. Disclaimers can be found on the source files, and also in LICENSE.txt. If there are any License violations, please contact lispascal through GitHub or create a New Issue, so they can be resolved.
 
 # Requirements
-This is an addon for Blender3D 2.7.  It has been tested for Blender 2.74 on Windows 8.1.
+This is an addon for Blender3D 2.8.  It has been tested for Blender 2.82 on Windows 10.
 
 Blender homepage:  http://www.blender.org
 
@@ -30,9 +30,9 @@ blender/2.74/scripts/addons
 Open up Blender's user preferences
 ![Position of User Preferences](http://imgur.com/b8Wv4.png)
 
-and select 'Addons', then 'Import/Export'.  Find the League of Legends addon and click the small box to the right to enable it.  If you want this addon to load upon starting Blender, click 'Save as Default', otherwise just close the window.
+and select 'Addons', then 'Import'.  Find the League of Legends addon and click the small box to the right to enable it.  If you want this addon to load upon starting Blender, click 'Save as Default', otherwise just close the window.
 
-Now you have import/export options under the File menu
+Now you have import options under the File menu
 
 # Getting Character Models (and Textures, Skeletons, etc)
 Importing characters can be done through [Skin Installer Ultimate](https://sites.google.com/site/siuupdates/)

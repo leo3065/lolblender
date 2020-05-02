@@ -302,8 +302,8 @@ def register():
     bpy.utils.register_class(IMPORT_OT_sco)
     bpy.types.TOPBAR_MT_file_import.append(menu_func_import)
 
-    bpy.utils.register_class(EXPORT_OT_lol)
-    bpy.types.TOPBAR_MT_file_export.append(menu_func_export)
+    # bpy.utils.register_class(EXPORT_OT_lol)
+    # bpy.types.TOPBAR_MT_file_export.append(menu_func_export)
 
 def unregister():
     bpy.utils.unregister_class(IMPORT_OT_lol)
@@ -311,15 +311,8 @@ def unregister():
     bpy.utils.unregister_class(IMPORT_OT_sco)
     bpy.types.TOPBAR_MT_file_import.remove(menu_func_import)
 
-    bpy.utils.unregister_class(EXPORT_OT_lol)
-    bpy.types.TOPBAR_MT_file_export.remove(menu_func_export)
-
-
-
-
-
-
-
+    # bpy.utils.unregister_class(EXPORT_OT_lol)
+    # bpy.types.TOPBAR_MT_file_export.remove(menu_func_export)
 
 
 def test_anm():
